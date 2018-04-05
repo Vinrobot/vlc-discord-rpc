@@ -1,7 +1,7 @@
 {
 	"general": {
 		"refresh-interval": 5000,
-		"debug": true
+		"loglevel": "debug"
 	},
 	"vlc": {
 		"hostname": "127.0.0.1",

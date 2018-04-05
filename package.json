@@ -26,6 +26,7 @@
 	"homepage": "https://github.com/Vinrobot/vlc-discord-rpc#readme",
 	"dependencies": {
 		"discord-rich-presence": "0.0.6",
-		"droopy-vlc": "git://github.com/Pigpog/droopy-vlc.git"
+		"droopy-vlc": "git://github.com/Pigpog/droopy-vlc.git",
+		"winston": "2.4.1"
 	}
 }
