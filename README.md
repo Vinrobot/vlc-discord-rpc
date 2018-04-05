@@ -24,6 +24,6 @@ Enter your VLC web interface password
 
 #### Run the command `npm install` in the project directory
 
-#### Run the command `nom start` in the project directory
+#### Run the command `npm start` in the project directory
 
 ### Enjoy
