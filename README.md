@@ -1,7 +1,7 @@
 # vlc-discord-rpc
 Discord rich presence for VLC media player.
 
-![Example](https://raw.githubusercontent.com/Pigpog/vlc-discord-rpc/master/example.PNG)
+![Example](/example.PNG)
 
 
 ### Requirements
@@ -16,7 +16,11 @@ You will need to enable the VLC web interface. To do this, go to the Preferences
 
 #### Edit config.js
 Enter your VLC web interface password
-`exports.vlcPass="your password here"`
+```json
+"vlc": {
+    "password": "your password here"
+}
+```
 
 #### Run the command `npm install` in the project directory
 
