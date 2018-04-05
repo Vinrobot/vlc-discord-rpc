@@ -1,7 +1,7 @@
 const client = require('discord-rich-presence')('410664151334256663');	//last part is the app id for discord. Dont change.
-const config = require("./config.js");
+const config = require("./config.json");
 var vlcService = require("droopy-vlc"),
-	vlc = new vlcService("http://:" + config.vlcPass + "@" + config.vlcHost + ":" + config.vlcPort);
+	vlc = new vlcService("http://:" + config.vlc.password + "@" + config.vlc.hostname + ":" + config.vlc.port);
 
 function escapeHtml(text) {
 	return text
