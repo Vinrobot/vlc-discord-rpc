@@ -1,7 +1,11 @@
-const client = require('discord-rich-presence')('410664151334256663');	//last part is the app id for discord. Dont change.
 const config = require('./config.json');
-var vlcService = require('droopy-vlc'),
-	vlc = new vlcService('http://:' + config.vlc.password + '@' + config.vlc.hostname + ':' + config.vlc.port);
+
+const Discord = require('discord-rich-presence')('410664151334256663');	// The last part is the app id for discord.
+const VLC = new (require('droopy-vlc'))('http://:' + config.vlc.password + '@' + config.vlc.hostname + ':' + config.vlc.port);
+
+const debug = config.general.debug ? function() {
+	console.log.apply(this, arguments);
+} : function() {};
 
 function escapeHtml(text) {
 	return text
@@ -12,9 +16,10 @@ function escapeHtml(text) {
 		.replace(/(&quot;)/g, '"');
 }
 
-//used to check if there have been updates
+// Used to check if there have been updates
 var nowPlaying = { state: '', details: '', smallImageKey: '' };
 
+// Returns the now playing object for Discord from a status
 function getNowPlaying(status) {
 	var nowPlaying = { largeImageKey: 'vlc', instance: true };
 	if (status) {
@@ -37,20 +42,29 @@ function getNowPlaying(status) {
 function statusUpdateFromVLC(status) {
 	var newPlaying = getNowPlaying(status);
 	if (newPlaying.state !== nowPlaying.state || newPlaying.details !== nowPlaying.details || newPlaying.smallImageKey !== nowPlaying.smallImageKey) {
-		console.log('Changes detected; sending to Discord');
-		client.updatePresence(newPlaying);
+		console.log('Changes detected; Sending to Discord');
+		debug("\tDetails:       \t" + newPlaying.details);
+		debug("\tState:         \t" + newPlaying.state);
+		debug("\tSmallImagesKey:\t" + newPlaying.smallImageKey);
+		Discord.updatePresence(newPlaying);
 		nowPlaying = newPlaying;
 	}
 }
 
-//checks for changes in playback and if it finds any it updates your presence
+// Function called to check for changes in playback
+// Will update Discord Rich Presence if needed
 function update() {
-	vlc.status().then(function (status) {
+	VLC.status().then(function (status) {
+		// Called when receiving the current status
 		statusUpdateFromVLC(status);
 	}, function(error) {
+		// If there is no playback playing (nor in pause)
+		// The call will fail with an error
 		statusUpdateFromVLC(undefined);
 	});
 }
 
+// Check for update every X milliseconds
+// Value set in config.json general > refres-interval
+setInterval(update, config.general["refresh-interval"]);
 update();
-setInterval(update, 5000);	//check for updates every 5000ms (5 seconds)

@@ -1,4 +1,8 @@
 {
+	"general": {
+		"refresh-interval": 5000,
+		"debug": true
+	},
 	"vlc": {
 		"hostname": "127.0.0.1",
 		"port": 8080,
