@@ -2,7 +2,7 @@ const config = require('../config/config.json');
 
 const logger = require('./logger.js')('VLC-Discord-RPC', config.general.loglevel);
 const Discord = require('discord-rich-presence')('410664151334256663');	// The last part is the app id for discord.
-const VLC = new (require('droopy-vlc'))('http://:' + config.vlc.password + '@' + config.vlc.hostname + ':' + config.vlc.port);
+const VLC = require('./vlc.js')(config.vlc);
 
 logger.debug('Configuration:');
 logger.debug('- General:');
@@ -45,7 +45,7 @@ function getNowPlaying(status) {
 	return nowPlaying;
 }
 
-function statusUpdateFromVLC(status) {
+VLC.requestStatus(function (status) {
 	var newPlaying = getNowPlaying(status);
 	if (newPlaying.state !== nowPlaying.state || newPlaying.details !== nowPlaying.details || newPlaying.smallImageKey !== nowPlaying.smallImageKey) {
 		logger.info('Changes detected; Sending to Discord');
@@ -53,22 +53,4 @@ function statusUpdateFromVLC(status) {
 		Discord.updatePresence(newPlaying);
 		nowPlaying = newPlaying;
 	}
-}
-
-// Function called to check for changes in playback
-// Will update Discord Rich Presence if needed
-function update() {
-	VLC.status().then(function (status) {
-		// Called when receiving the current status
-		statusUpdateFromVLC(status);
-	}, function (error) {
-		// If there is no playback playing (nor in pause)
-		// The call will fail with an error
-		statusUpdateFromVLC(undefined);
-	});
-}
-
-// Check for update every X milliseconds
-// Value set in config.json general > refres-interval
-setInterval(update, config.general['refresh-interval']);
-update();
+}, config.general['refresh-interval']);
