@@ -1,33 +1,8 @@
 const config = require('../config/config.json');
 
-const winston = require('winston');
+const logger = require('./logger.js')('VLC-Discord-RPC', config.general.loglevel);
 const Discord = require('discord-rich-presence')('410664151334256663');	// The last part is the app id for discord.
 const VLC = new (require('droopy-vlc'))('http://:' + config.vlc.password + '@' + config.vlc.hostname + ':' + config.vlc.port);
-
-const logger = new (winston.Logger)({
-	level: config.general.loglevel,
-	transports: [
-		new (winston.transports.Console)({
-			timestamp: (function () {
-				function pad(number) {
-					return number < 10 ? '0' + number : number;
-				}
-				return (function() {
-					var now = new Date();
-					return now.getUTCFullYear() + '-' + pad(now.getUTCMonth() + 1) + '-' + pad(now.getUTCDate()) + ' ' + pad(now.getUTCHours()) + ':' + pad(now.getUTCMinutes()) + ':' + pad(now.getUTCSeconds());
-				});
-			})(),
-			formatter: function (options) {
-				var date = '[' + options.timestamp() + ']';
-				var name = '[VLC-Discord-RPC]'
-				var level = '<' + winston.config.colorize(options.level, options.level.toUpperCase()) + '>';
-				var message = options.message ? options.message : '';
-				var meta = (options.meta && Object.keys(options.meta).length ? '\n\t' + JSON.stringify(options.meta) : '');
-				return date + ' ' + name + ' ' + level + ' ' + message + meta;
-			}
-		})
-	]
-});
 
 logger.debug('Configuration:');
 logger.debug('- General:');
