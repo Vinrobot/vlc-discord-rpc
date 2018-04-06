@@ -35,7 +35,7 @@ function getNowPlaying(status) {
 		if (status.state === 'playing') {
 			var now = Date.now() / 1000;
 			nowPlaying.startTimestamp = now;
-			nowPlaying.endTimestamp = parseInt(parseInt(now) + (parseInt(status.duration) - parseInt(status.time)));
+			nowPlaying.endTimestamp = parseInt(now) + (parseInt(status.duration) - parseInt(status.time));
 		}
 	} else {
 		nowPlaying.smallImageKey = 'paused';
