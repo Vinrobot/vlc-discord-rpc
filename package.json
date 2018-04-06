@@ -19,6 +19,9 @@
 		"presence"
 	],
 	"author": "Jared",
+	"contributors": [
+		"Vinrobot <vinrobot97@gmail.com> (https://vinrobot.net/)"
+	],
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/Vinrobot/vlc-discord-rpc/issues"
