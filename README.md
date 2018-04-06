@@ -1,7 +1,7 @@
 # vlc-discord-rpc
 Discord rich presence for VLC media player.
 
-![Example](/example.PNG)
+![Example](/images/example.PNG)
 
 
 ### Requirements
@@ -14,7 +14,7 @@ Discord rich presence for VLC media player.
 #### VLC
 You will need to enable the VLC web interface. To do this, go to the Preferences menu (under Tools) and select `All` under `Show settings` in the bottom left. Scroll to Interface and click on Main interfaces. Check the Web interface to enable it. Now expand the Main interfaces category and choose Lua. Set the password under `Lua HTTP`.
 
-#### Edit config.js
+#### Edit config/config.json
 Enter your VLC web interface password
 ```json
 "vlc": {

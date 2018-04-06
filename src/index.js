@@ -1,4 +1,4 @@
-const config = require('./config.json');
+const config = require('../config/config.json');
 
 const winston = require('winston');
 const Discord = require('discord-rich-presence')('410664151334256663');	// The last part is the app id for discord.
